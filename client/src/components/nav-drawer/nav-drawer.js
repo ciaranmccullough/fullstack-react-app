@@ -37,8 +37,8 @@ const NavDrawer = () => {
         <List>
           {[
             { text: 'Home', to: '/' },
-            { text: 'People', to: '/people' },
-            { text: 'Add People', to: '/people/add' },
+            { text: 'Libraries', to: '/libraries' },
+            { text: 'Add Libraries', to: '/libraries/add' },
             { text: 'Books', to: '/books' },
             { text: 'Add Books', to: '/books/add' },
           ].map(({ text, to }) => (

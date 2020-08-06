@@ -6,11 +6,11 @@ import { BooksProvider } from './contexts/books.context';
 import { MenuProvider } from './contexts/menu.context';
 
 import Home from './pages/home/home';
-import People from './pages/people/people';
+import Libraries from './pages/libraries/libraries';
 import Books from './pages/books/books';
 import NotFound from './pages/404/404';
-import AddPeople from './pages/add-people/add-people';
-import UpdatePeople from './pages/update-people/update-people';
+import AddLibraries from './pages/add-libraries/add-libraries';
+import UpdateLibraries from './pages/update-libraries/update-libraries';
 import AddBooks from './pages/add-books/add-books';
 import UpdateBooks from './pages/update-books/update-books';
 
@@ -23,12 +23,12 @@ function App() {
             <Router>
               <Switch>
                 <Route exact path='/' component={Home} />
-                <Route exact path='/people' component={People} />
-                <Route exact path={`/people/add`} component={AddPeople} />
+                <Route exact path='/libraries' component={Libraries} />
+                <Route exact path={`/libraries/add`} component={AddLibraries} />
                 <Route
                   exact
-                  path={`/people/update/:id`}
-                  component={UpdatePeople}
+                  path={`/libraries/update/:id`}
+                  component={UpdateLibraries}
                 />
                 <Route exact path='/books' component={Books} />
                 <Route exact path={'/books/add'} component={AddBooks} />
