@@ -1,2 +1,3 @@
-# fullstack-react-app
-A fullstack react app with Node/Express server.
+# fullstack-react-library
+A fullstack react library with Node/Express server.
+# fullstack-react-library-app
