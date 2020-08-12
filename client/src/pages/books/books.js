@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from './../../components/header/header';
 import PageFrame from './../../components/page-frame/page-frame';
-// import { BooksContext } from './../../contexts/books.context';
+import NoResults from './../../components/no-results/no-results';
+import ErrorDisplay from './../../components/error-display/error-display';
+import { CircularProgress } from '@material-ui/core';
+import BooksList from './../../components/books-list/books-list';
+import { BooksContext } from './../../contexts/books.context';
 
 const Books = () => {
+  const { books, loaded, getBooks, loading, error } = useContext(BooksContext);
+
+  useEffect(() => {
+    console.log('in useEffect', books, loaded);
+    if (!loaded) {
+      getBooks();
+    }
+  }, [loaded, getBooks, books]);
   return (
     <div className='App'>
       <Header />
       <main>
         <PageFrame>
           <h1>Books</h1>
-          {/* {loading ? <CircularProgress /> : null}
-          {!loading && error ? (<ErrorDisplay error={error} />): null} */}
-          {/* The '?' below is an 'optional chaining operator' (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) */}
-          {/* {!loading && !error && !todos?.length ? (
-            <NoResults dataName="todos" />
-          ): null}
-          {!loading && !error && todos?.length ? (<TodosList todos={todos} />) : null} */}
+          {loading ? <CircularProgress /> : null}
+          {!loading && error ? <ErrorDisplay error={error} /> : null}
+          {!loading && !error && !books?.length ? (
+            <NoResults dataName='books' />
+          ) : null}
+          {!loading && !error && books?.length ? (
+            <BooksList books={books} />
+          ) : null}
         </PageFrame>
       </main>
     </div>
