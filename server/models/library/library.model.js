@@ -12,4 +12,6 @@ const LibrarySchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Library', LibrarySchema);
+Library = mongoose.model('Library', LibrarySchema);
+
+module.exports = Library;

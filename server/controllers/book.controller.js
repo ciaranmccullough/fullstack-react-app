@@ -1,10 +1,7 @@
-// const path = require('path');
-const express = require('express');
-const router = express.Router();
-const Book = require('../models/book/book');
+const Book = require('../models/book/book.model');
+const { errorHandler } = require('./utils');
 
-// Getting
-router.get('/:id?', (req, res) => {
+exports.getBooks = function (req, res) {
   let query = {};
   if (req.params.id) {
     query._id = req.params.id;
@@ -15,9 +12,9 @@ router.get('/:id?', (req, res) => {
       if (err) return errorHandler(res, err);
       return res.status(200).json(books);
     });
-});
+};
 
-router.post('/', (req, res) => {
+exports.addBook = function (req, res) {
   const bookData = req.body;
   console.log('bookData', bookData);
   const newBook = new Book(bookData);
@@ -25,20 +22,18 @@ router.post('/', (req, res) => {
     if (err) return errorHandler(res, err);
     return res.status(201).json(book);
   });
-});
+};
 
-router.put('/:id', (req, res) => {
+exports.updateBook = function (req, res) {
   Book.updateOne({ _id: req.params.id }, req.body, function (err) {
     if (err) return errorHandler(res, err);
     res.sendStatus(200);
   });
-});
+};
 
-router.delete('/:id', (req, res) => {
+exports.removeBook = function (req, res) {
   Book.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return errorHandler(res, err);
     res.sendStatus(204);
   });
-});
-
-module.exports = router;
+};

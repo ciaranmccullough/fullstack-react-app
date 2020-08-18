@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BookForm = ({ initialValues }) => {
+function BookForm({ initialValues }) {
   const classes = useStyles();
   let { id } = useParams();
   const [populated, setPopulated] = useState(false);
@@ -48,10 +48,10 @@ const BookForm = ({ initialValues }) => {
 
   const ids = libraries.map((library) => library._id);
   const schema = yup.object().shape({
-    title: yup.string().required().min(2).max(30),
-    author: yup.string().required().min(2).max(30),
-    summary: yup.string().required().min(2).max(200),
-    genre: yup.string().required().min(2).max(30),
+    title: yup.string().required().min(2).max(50),
+    author: yup.string().required().min(2).max(50),
+    summary: yup.string().required().min(2).max(400),
+    genre: yup.string().required().min(2).max(20),
     owner: yup.mixed().oneOf(ids),
   });
 
@@ -61,7 +61,7 @@ const BookForm = ({ initialValues }) => {
   });
 
   if (initialValues && !populated) {
-    const formValues = { ...initialValues, owner: initialValues.owner._id };
+    const formValues = { ...initialValues };
     console.log('formValues', formValues);
     reset(formValues);
     setPopulated(true);
@@ -70,7 +70,7 @@ const BookForm = ({ initialValues }) => {
   // console.log("errors", errors);
   const onSubmit = async (formValues) => {
     console.log('formValues', formValues);
-    // formValues._id = id; // pulled from the URL using router 'useParams' hook
+    formValues._id = id; // pulled from the URL using router 'useParams' hook
 
     if (populated) {
       const updates = {};
@@ -116,9 +116,11 @@ const BookForm = ({ initialValues }) => {
         <Controller
           as={<TextField helperText={errors.author && errors.author.message} />}
           error={!!errors.author}
+          helperText={errors.author && errors.author.message}
           id='author'
           name='author'
           label='Author'
+          multiline
           fullWidth
           control={control}
           rules={{ required: true }}
@@ -161,7 +163,7 @@ const BookForm = ({ initialValues }) => {
             <Select>
               {libraries.map((book, i) => (
                 <MenuItem key={i} value={book._id}>
-                  {book.lastName} {book.firstName}
+                  {book.name}
                 </MenuItem>
               ))}
             </Select>
@@ -204,6 +206,6 @@ const BookForm = ({ initialValues }) => {
       </div>
     </form>
   );
-};
+}
 
 export default BookForm;

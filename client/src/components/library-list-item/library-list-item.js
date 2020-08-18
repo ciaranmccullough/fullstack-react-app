@@ -21,21 +21,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LibrariesListItem = ({ item: { _id, name, location } }) => {
+const LibraryListItem = ({ item: { _id, name, location } }) => {
   const classes = useStyles();
   const history = useHistory();
   const { deleteLibrary } = useContext(LibrariesContext);
 
   function updateHandler(id) {
-    history.push(`local_library/libraries/update/${id}`);
+    history.push(`/libraries/update/${id}`);
   }
 
   return (
     <li className={classes.item}>
-      <div className={classes.display}>
-        {`${name} `}
-        {location}
-      </div>
+      <div className={classes.display}>{`${name}, ${location}`}</div>
       <div className={classes.controls}>
         <Button onClick={() => updateHandler(_id)} aria-label='update book'>
           <EditOutlinedIcon />
@@ -48,4 +45,4 @@ const LibrariesListItem = ({ item: { _id, name, location } }) => {
   );
 };
 
-export default LibrariesListItem;
+export default LibraryListItem;

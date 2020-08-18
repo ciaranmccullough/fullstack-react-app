@@ -4,17 +4,24 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
-    "start:dev": "NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test MONGODB_URI=mongodb://localhost/test-crae`jest --testTimeout=10000"
+    "start": "npx cross-env NODE_ENV=production node index.js",
+    "start:dev": "npx cross-env NODE_ENV=development nodemon index.js",
+    "start:test": "npx cross-env NODE_ENV=test nodemon index.js",
+    "test": "npx cross-env NODE_ENV=test MONGODB_URI=mongodb://localhost/test-crae jest --testTimeout=10000"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
-    "mongodb": "^3.6.0",
     "mongoose": "^5.9.21"
   },
   "devDependencies": {

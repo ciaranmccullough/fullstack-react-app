@@ -1,9 +1,7 @@
-// const path = require('path');
-const express = require('express');
-const router = express.Router();
-const Library = require('../models/library/library');
+const Library = require('../models/library/library.model');
+const { errorHandler } = require('./utils');
 
-router.get('/:id?', (req, res) => {
+exports.getLibraries = function (req, res) {
   let query = {};
   if (req.params.id) {
     query._id = req.params.id;
@@ -12,9 +10,9 @@ router.get('/:id?', (req, res) => {
     if (err) return errorHandler(res, err);
     return res.status(200).json(libraries);
   });
-});
+};
 
-router.post('/', (req, res) => {
+exports.addLibrary = function (req, res) {
   const libraryData = req.body;
   console.log('libraryData', libraryData);
   const newLibrary = new Library(libraryData);
@@ -22,20 +20,18 @@ router.post('/', (req, res) => {
     if (err) return errorHandler(res, err);
     return res.status(201).json(library);
   });
-});
+};
 
-router.put('/:id', (req, res) => {
+exports.updateLibrary = function (req, res) {
   Library.updateOne({ _id: req.params.id }, req.body, function (err, result) {
     if (err) return errorHandler(res, err);
     res.sendStatus(200);
   });
-});
+};
 
-router.delete('/:id', (req, res) => {
+exports.removeLibrary = function (req, res) {
   Library.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return errorHandler(res, err);
     res.sendStatus(204);
   });
-});
-
-module.exports = router;
+};

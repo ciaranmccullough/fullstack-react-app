@@ -26,4 +26,6 @@ const BookSchema = new Schema({
   owner: { type: ObjectId, ref: 'Library' }, // Works because library model will be stored in mongoose by the time this is queried
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+Book = mongoose.model('Book', BookSchema);
+
+module.exports = Book;

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
-import { useForm, Controller } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers';
+import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
+import { useParams } from 'react-router-dom';
 
-import { LibrariesContext } from '../../../contexts/libraries.context';
+import { LibrariesContext } from './../../../contexts/libraries.context';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -25,10 +25,10 @@ const schema = yup.object().shape({
   location: yup.string().required().min(2).max(20),
 });
 
-const LibraryForm = ({ initialValues }) => {
+function LibraryForm({ initialValues }) {
   const classes = useStyles();
   let { id } = useParams();
-  const { populated, setPopulated } = useState(false);
+  const [populated, setPopulated] = useState(false);
 
   const { addLibrary, updateLibrary } = useContext(LibrariesContext);
   const { handleSubmit, errors, control, reset, formState } = useForm({
@@ -41,8 +41,10 @@ const LibraryForm = ({ initialValues }) => {
     setPopulated(true);
   }
 
+  // console.log("errors", errors);
   const onSubmit = async (formValues) => {
     console.log('formValues', formValues);
+    // formValues._id = id; // pulled from the URL using router 'useParams' hook
 
     if (populated) {
       const updates = {};
@@ -59,10 +61,12 @@ const LibraryForm = ({ initialValues }) => {
       addLibrary(formValues);
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.formRow}>
+        {/* <label htmlFor="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" ref={register} />
+              {errors.firstName && "Title name is required"} */}
         <Controller
           as={TextField}
           error={!!errors.name}
@@ -75,6 +79,9 @@ const LibraryForm = ({ initialValues }) => {
         />
       </div>
       <div className={classes.formRow}>
+        {/* <label htmlFor="email">Email</label>
+              <input type="email" name="email" ref={register} />
+              {errors.email && "Title name is required"} */}
         <Controller
           as={TextField}
           error={!!errors.location}
@@ -110,6 +117,6 @@ const LibraryForm = ({ initialValues }) => {
       </div>
     </form>
   );
-};
+}
 
 export default LibraryForm;

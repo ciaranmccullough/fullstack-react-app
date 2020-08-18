@@ -18,24 +18,26 @@ export const LibrariesProvider = (props) => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
-
+  // const [search, setSearch] = useState("");
   const { addToast } = useToasts();
 
   const getLibraries = async () => {
+    // console.log('loading', loading);
+    // console.log('error', error);
     if (loading || loaded || error) {
       return;
     } else {
       setLoading(true);
     }
     try {
-      const response = await fetch(
-        'http://localhost:3000/local_library/libraries'
-      );
+      const response = await fetch('/api/v1/libraries');
       if (response.status !== 200) {
         throw response;
       }
       const data = await response.json();
       setLibraries(data);
+      // setLoading(false);
+      // console.log('libraries from context', libraries);
     } catch (err) {
       setError(err.message || err.statusText);
     } finally {
@@ -46,16 +48,14 @@ export const LibrariesProvider = (props) => {
 
   const addLibrary = async (formData) => {
     try {
-      const response = await fetch(
-        'http://localhost:3000/local_library/libraries',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch('/api/v1/libraries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(formData),
+      });
       if (response.status !== 201) {
         throw response;
       }
@@ -63,7 +63,7 @@ export const LibrariesProvider = (props) => {
       console.log('got data', savedLibrary);
       setLibraries([...libraries, savedLibrary]);
       addToast(`Saved ${savedLibrary.name}`, {
-        sppearance: 'success',
+        appearance: 'success',
       });
     } catch (err) {
       console.log(err);
@@ -76,22 +76,21 @@ export const LibrariesProvider = (props) => {
   const updateLibrary = async (id, updates) => {
     let newLibrary = null;
     try {
-      const response = await fetch(
-        `http://localhost:3000/local_library/libraries/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updates),
-        }
-      );
+      const response = await fetch(`/api/v1/libraries/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(updates),
+      });
       if (response.status !== 200) {
         throw response;
       }
+      // Get index
       const index = libraries.findIndex((library) => library._id === id);
 
-      // Get actual person
+      // Get actual library
       const oldLibrary = libraries[index];
 
       // Merge with updates
@@ -100,18 +99,19 @@ export const LibrariesProvider = (props) => {
         ...oldLibrary,
         ...updates, // order here is important for the override!!
       };
-      const updatedLibrary = [
+      // recreate the libraries array
+      const updatedLibraries = [
         ...libraries.slice(0, index),
         newLibrary,
         ...libraries.slice(index + 1),
       ];
-      setLibraries(updatedLibrary);
+      setLibraries(updatedLibraries);
       addToast(`Updated ${newLibrary.name}`, {
         appearance: 'success',
       });
     } catch (err) {
       console.log(err);
-      addToast(`ErrorL Failed to update ${newLibrary.name}`, {
+      addToast(`Error: Failed to update ${newLibrary.name}`, {
         appearance: 'error',
       });
     }
@@ -120,27 +120,25 @@ export const LibrariesProvider = (props) => {
   const deleteLibrary = async (id) => {
     let deletedLibrary = null;
     try {
-      const response = await fetch(
-        `http://localhost:3000/local_library/libraries/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch(`/api/v1/libraries/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
       if (response.status !== 204) {
         throw response;
       }
       // Get index
-      const index = libraries.findIndex((library) => libraries._id === id);
+      const index = libraries.findIndex((library) => library._id === id);
       deletedLibrary = libraries[index];
       // recreate the libraries array without that library
-      const updatedLibrary = [
+      const updatedLibraries = [
         ...libraries.slice(0, index),
         ...libraries.slice(index + 1),
       ];
-      setLibraries(updatedLibrary);
+      setLibraries(updatedLibraries);
       addToast(`Deleted ${deletedLibrary.name}`, {
         appearance: 'success',
       });

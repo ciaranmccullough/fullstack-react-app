@@ -1,14 +1,15 @@
 {
-  "name": "fullstack-react-library",
+  "name": "fullstack-react-app",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Ciaran McCullough <ciaran.mccullough@gmail.com>",
+  "author": "Ciaran McCullough <ciaran.mccullough89@gmail.com>",
   "license": "MIT",
   "scripts": {
     "setup": "concurrently --kill-others-on-fail  \"cd server && yarn\" \"cd client && yarn\"",
     "client:build": "cd client && yarn build",
     "client:dev": "cd client && yarn start",
     "server:dev": "cd server && yarn start:dev",
+    "server:dev:test": "cd server && yarn start:dev:test",
     "dev": "concurrently --kill-others-on-fail \"yarn server:dev\" \"yarn client:dev\"",
     "client:test": "cd client && yarn test",
     "server:test": "cd server && jest --detectOpenHandles",

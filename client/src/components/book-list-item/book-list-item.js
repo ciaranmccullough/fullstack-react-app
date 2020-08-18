@@ -3,12 +3,8 @@ import Button from '@material-ui/core/Button';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { BooksContext } from './../../contexts/books.context';
-// import clsx from "clsx";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -37,9 +33,9 @@ const BookListItem = ({
   const classes = useStyles();
   const history = useHistory();
   const { deleteBook } = useContext(BooksContext);
-  //localhost:3000/local_library/libraries
+
   function updateHandler(id) {
-    history.push(`local_library/books/update/${id}`);
+    history.push(`/books/update/${id}`);
   }
 
   return (
@@ -58,11 +54,10 @@ const BookListItem = ({
       </div>
       <div className={classes.display}>
         <p>
-          {/* person list component here */}
-          {title}
-          {author}
-          {summary}
-          {genre}
+          {/* Could use a library list item component here... */}
+          {/* <p>
+            {name},{location}
+          </p> */}
         </p>
       </div>
       <div className={classes.controls}>

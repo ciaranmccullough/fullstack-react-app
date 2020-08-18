@@ -31,7 +31,6 @@ const Libraries = (props) => {
           {!loading && !error && libraries && libraries.length ? (
             <LibrariesList libraries={libraries} />
           ) : null}
-          ;
           {!loading && !error && libraries && !libraries.length ? (
             <NoResults dataName='libraries' />
           ) : null}

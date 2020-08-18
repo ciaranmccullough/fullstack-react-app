@@ -7,14 +7,14 @@ import { BooksContext } from './../../contexts/books.context';
 
 const UpdateBooks = () => {
   let { id } = useParams();
-  const { books, loaded, fetchBooks } = useContext(BooksContext);
+  const { books, loaded, getBooks } = useContext(BooksContext);
   console.log('books', books);
   useEffect(() => {
     console.log('in useEffect', books, loaded);
     if (!loaded) {
-      fetchBooks();
+      getBooks();
     }
-  }, [loaded, fetchBooks, books]);
+  }, [loaded, getBooks, books]);
 
   console.log('books', books);
   const bookToBeUpdated = books.find((book) => book._id === id);
