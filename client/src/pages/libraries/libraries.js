@@ -25,7 +25,7 @@ const Libraries = (props) => {
       <Header />
       <main>
         <PageFrame>
-          <h1>Libaries</h1>
+          <h1>Libraries</h1>
           {loading ? <CircularProgress /> : null}
           {!loading && error ? <ErrorDisplay error={error} /> : null}
           {!loading && !error && libraries && libraries.length ? (

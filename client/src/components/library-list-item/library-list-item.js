@@ -1,47 +1,82 @@
 import React, { useContext } from 'react';
-import Button from '@material-ui/core/Button';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { LibrariesContext } from './../../contexts/libraries.context';
-// import clsx from "clsx";
-import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  item: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@material-ui/core';
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#1b9aaa',
+    color: theme.palette.common.white,
   },
-  display: {
-    marginInlineEnd: '50px',
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 330,
   },
 }));
 
-const LibraryListItem = ({ item: { _id, name, location } }) => {
+const LibraryListItem = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { deleteLibrary } = useContext(LibrariesContext);
+  const { libraries, deleteLibrary } = useContext(LibrariesContext);
 
   function updateHandler(id) {
     history.push(`/libraries/update/${id}`);
   }
 
   return (
-    <li className={classes.item}>
-      <div className={classes.display}>{`${name}, ${location}`}</div>
-      <div className={classes.controls}>
-        <Button onClick={() => updateHandler(_id)} aria-label='update book'>
-          <EditOutlinedIcon />
-        </Button>
-        <Button onClick={() => deleteLibrary(_id)} aria-label='delete book'>
-          <DeleteOutlineIcon />
-        </Button>
-      </div>
-    </li>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label='simple table'>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell align='right'>Location</StyledTableCell>
+            <StyledTableCell align='right'>Update</StyledTableCell>
+            <StyledTableCell align='right'>Delete</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {libraries.map((library) => (
+            <TableRow key={library.name}>
+              <TableCell component='th' scope='row'>
+                {library.name}
+              </TableCell>
+              <TableCell align='right'>{library.location}</TableCell>
+              <TableCell
+                align='right'
+                onClick={() => updateHandler(library._id)}
+                aria-label='update library'
+              >
+                <EditOutlinedIcon />
+              </TableCell>
+              <TableCell
+                align='right'
+                onClick={() => deleteLibrary(library._id)}
+                aria-label='delete library'
+              >
+                <DeleteOutlineIcon />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

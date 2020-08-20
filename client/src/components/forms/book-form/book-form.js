@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Paper,
 } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,6 +17,12 @@ import { BooksContext } from './../../../contexts/books.context';
 import { LibrariesContext } from './../../../contexts/libraries.context';
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    margin: 20,
+  },
+  form: {
+    padding: 10,
+  },
   button: {
     margin: theme.spacing(1),
   },
@@ -99,112 +106,118 @@ function BookForm({ initialValues }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={classes.formRow}>
-        <Controller
-          as={<TextField helperText={errors.title && errors.title.message} />}
-          error={!!errors.title}
-          id='title'
-          name='title'
-          label='Title'
-          fullWidth
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        <Controller
-          as={<TextField helperText={errors.author && errors.author.message} />}
-          error={!!errors.author}
-          helperText={errors.author && errors.author.message}
-          id='author'
-          name='author'
-          label='Author'
-          multiline
-          fullWidth
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        <Controller
-          as={
-            <TextField helperText={errors.summary && errors.summary.message} />
-          }
-          error={!!errors.summary}
-          helperText={errors.summary && errors.summary.message}
-          id='summary'
-          name='summary'
-          label='Summary'
-          multiline
-          fullWidth
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        <Controller
-          as={<TextField helperText={errors.genre && errors.genre.message} />}
-          error={!!errors.genre}
-          helperText={errors.genre && errors.genre.message}
-          id='genre'
-          name='genre'
-          label='Genre'
-          multiline
-          fullWidth
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        <InputLabel id='owner'>Owner</InputLabel>
-        <Controller
-          as={
-            <Select>
-              {libraries.map((book, i) => (
-                <MenuItem key={i} value={book._id}>
-                  {book.name}
-                </MenuItem>
-              ))}
-            </Select>
-          }
-          error={!!errors.owner}
-          id='owner'
-          name='owner'
-          label='Owner'
-          fullWidth
-          control={control}
-          rules={{ required: true }}
-        />
-        <InputLabel id='owner' className={classes.errorMessage}>
-          {errors.owner && errors.owner.message}
-        </InputLabel>
-      </div>
-      <div className={classes.formRow}>
-        <Button
-          onClick={() =>
-            reset({
-              title: '',
-              author: '',
-              summary: '',
-              genre: '',
-              owner: '',
-            })
-          }
-        >
-          Reset
-        </Button>
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          className={classes.button}
-          disabled={!formState.isValid}
-        >
-          {populated ? 'Update' : 'Add'} Book
-        </Button>
-      </div>
-    </form>
+    <Paper className={classes.container} elevation={3}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.formRow}>
+          <Controller
+            as={<TextField helperText={errors.title && errors.title.message} />}
+            error={!!errors.title}
+            id='title'
+            name='title'
+            label='Title'
+            fullWidth
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          <Controller
+            as={
+              <TextField helperText={errors.author && errors.author.message} />
+            }
+            error={!!errors.author}
+            helperText={errors.author && errors.author.message}
+            id='author'
+            name='author'
+            label='Author'
+            multiline
+            fullWidth
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          <Controller
+            as={
+              <TextField
+                helperText={errors.summary && errors.summary.message}
+              />
+            }
+            error={!!errors.summary}
+            helperText={errors.summary && errors.summary.message}
+            id='summary'
+            name='summary'
+            label='Summary'
+            multiline
+            fullWidth
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          <Controller
+            as={<TextField helperText={errors.genre && errors.genre.message} />}
+            error={!!errors.genre}
+            helperText={errors.genre && errors.genre.message}
+            id='genre'
+            name='genre'
+            label='Genre'
+            multiline
+            fullWidth
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          <InputLabel id='owner'>Owner</InputLabel>
+          <Controller
+            as={
+              <Select>
+                {libraries.map((book, i) => (
+                  <MenuItem key={i} value={book._id}>
+                    {book.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            }
+            error={!!errors.owner}
+            id='owner'
+            name='owner'
+            label='Owner'
+            fullWidth
+            control={control}
+            rules={{ required: true }}
+          />
+          <InputLabel id='owner' className={classes.errorMessage}>
+            {errors.owner && errors.owner.message}
+          </InputLabel>
+        </div>
+        <div className={classes.formRow}>
+          <Button
+            onClick={() =>
+              reset({
+                title: '',
+                author: '',
+                summary: '',
+                genre: '',
+                owner: '',
+              })
+            }
+          >
+            Reset
+          </Button>
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            className={classes.button}
+            disabled={!formState.isValid}
+          >
+            {populated ? 'Update' : 'Add'} Book
+          </Button>
+        </div>
+      </form>
+    </Paper>
   );
 }
 

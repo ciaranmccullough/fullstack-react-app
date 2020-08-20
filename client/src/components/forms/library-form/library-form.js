@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Paper } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
@@ -9,6 +9,12 @@ import { useParams } from 'react-router-dom';
 import { LibrariesContext } from './../../../contexts/libraries.context';
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    margin: 20,
+  },
+  form: {
+    padding: 10,
+  },
   button: {
     margin: theme.spacing(1),
   },
@@ -62,60 +68,62 @@ function LibraryForm({ initialValues }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={classes.formRow}>
-        {/* <label htmlFor="firstName">First Name</label>
+    <Paper className={classes.container} elevation={3}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.formRow}>
+          {/* <label htmlFor="firstName">First Name</label>
               <input type="text" id="firstName" name="firstName" ref={register} />
               {errors.firstName && "Title name is required"} */}
-        <Controller
-          as={TextField}
-          error={!!errors.name}
-          helperText={errors.name && errors.name.message}
-          id='name'
-          name='name'
-          label='Name'
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        {/* <label htmlFor="email">Email</label>
+          <Controller
+            as={TextField}
+            error={!!errors.name}
+            helperText={errors.name && errors.name.message}
+            id='name'
+            name='name'
+            label='Name'
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          {/* <label htmlFor="email">Email</label>
               <input type="email" name="email" ref={register} />
               {errors.email && "Title name is required"} */}
-        <Controller
-          as={TextField}
-          error={!!errors.location}
-          helperText={errors.location && errors.location.message}
-          type='location'
-          id='location'
-          name='location'
-          label='Location'
-          control={control}
-          rules={{ required: true }}
-        />
-      </div>
-      <div className={classes.formRow}>
-        <Button
-          onClick={() =>
-            reset({
-              name: '',
-              location: '',
-            })
-          }
-        >
-          Reset
-        </Button>
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          className={classes.button}
-          disabled={!formState.isValid}
-        >
-          {populated ? 'Update' : 'Add'} Library
-        </Button>
-      </div>
-    </form>
+          <Controller
+            as={TextField}
+            error={!!errors.location}
+            helperText={errors.location && errors.location.message}
+            type='location'
+            id='location'
+            name='location'
+            label='Location'
+            control={control}
+            rules={{ required: true }}
+          />
+        </div>
+        <div className={classes.formRow}>
+          <Button
+            onClick={() =>
+              reset({
+                name: '',
+                location: '',
+              })
+            }
+          >
+            Reset
+          </Button>
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            className={classes.button}
+            disabled={!formState.isValid}
+          >
+            {populated ? 'Update' : 'Add'} Library
+          </Button>
+        </div>
+      </form>
+    </Paper>
   );
 }
 

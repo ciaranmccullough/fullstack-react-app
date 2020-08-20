@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
+const MONGODB_URI = `mongodb+srv://${process.env.dbuser}:${process.env.dbpassword}@cluster0.gneug.mongodb.net/${process.env.dbname}?retryWrites=true&w=majority`;
+
 const promise = mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true, // Googled
