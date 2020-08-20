@@ -19,7 +19,7 @@
     "client": "cd client && yarn build",
     "server": "cd server && yarn start",
     "build": "",
-    "heroku-postbuild": "rimraf cd yarn setup && yarn client:build",
+    "heroku-postbuild": "cd yarn setup && yarn client:build",
     "start": "cd server && node index.js"
   },
   "dependencies": {
