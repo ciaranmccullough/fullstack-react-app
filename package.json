@@ -20,6 +20,7 @@
     "server": "cd server && yarn start",
     "build": "",
     "heroku-postbuild": "yarn start && yarn client:build",
+    "postinstall": "yarn setup",
     "start": "cd server && node index.js"
   },
   "dependencies": {
