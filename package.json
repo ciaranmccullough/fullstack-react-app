@@ -19,7 +19,7 @@
     "client": "cd client && yarn build",
     "server": "cd server && yarn start",
     "build": "",
-    "heroku-postbuild": "yarn install --prefix client && yarn build --prefix client",
+    "heroku-postbuild": "yarn start && yarn client:build",
     "start": "cd server && node index.js"
   },
   "dependencies": {
