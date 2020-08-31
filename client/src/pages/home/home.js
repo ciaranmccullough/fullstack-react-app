@@ -41,14 +41,16 @@ const useStyles = makeStyles({
 
 const Home = () => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
   return (
     <div className='App'>
       <Header />
       <main>
         <PageFrame>
           <h1>Homepage</h1>
-          <p>This is a basic react full-stack app</p>
+          <p>
+            This is a full-stack React app with Node/Express backend and MongoDb
+            database.
+          </p>
           <h2>Instructions</h2>
           <p>
             This app allows you to create a library and then list books against
