@@ -49,6 +49,7 @@ const BookListItem = () => {
             <StyledTableCell align='right'>Author</StyledTableCell>
             <StyledTableCell align='center'>Summary</StyledTableCell>
             <StyledTableCell align='right'>Genre</StyledTableCell>
+            <StyledTableCell align='right'>Owner</StyledTableCell>
             <StyledTableCell align='right'>Update</StyledTableCell>
             <StyledTableCell align='right'>Delete</StyledTableCell>
           </TableRow>
@@ -62,6 +63,7 @@ const BookListItem = () => {
               <TableCell align='right'>{book.author}</TableCell>
               <TableCell align='left'>{book.summary}</TableCell>
               <TableCell align='right'>{book.genre}</TableCell>
+              <TableCell align='right'>{book.owner.name}</TableCell>
               <TableCell
                 align='right'
                 onClick={() => updateHandler(book._id)}
