@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import BookListItem from './../book-list-item/book-list-item';
 
 const BooksList = () => {
