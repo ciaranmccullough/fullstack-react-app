@@ -1,7 +1,6 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { useToasts } from 'react-toast-notifications';
-// import cloneDeep from 'lodash.cloneDeep' <-- use if your objects get complex
-// import {LibrariesContext} from './libraries.context';
+import { LibrariesContext } from './libraries.context';
 
 export const BooksContext = createContext({
   getBooks: () => [],
@@ -21,7 +20,7 @@ export const BooksProvider = (props) => {
   const [error, setError] = useState(null);
   // const [search, setSearch] = useState("");
   const { addToast } = useToasts();
-  // const { libraries } = useContext(LibrariesContext);
+  const { libraries } = useContext(LibrariesContext);
 
   const getBooks = async () => {
     // console.log('loading', loading);
@@ -62,6 +61,11 @@ export const BooksProvider = (props) => {
       //   throw response;
       // }
       const savedBook = await response.json();
+      const owner = libraries.find(
+        (library) => library._id === savedBook.owner
+      );
+      savedBook.owner = owner;
+
       console.log('got data', savedBook);
       setBooks([...books, savedBook]);
       addToast(`Saved ${savedBook.title}`, {
@@ -75,7 +79,7 @@ export const BooksProvider = (props) => {
     }
   };
 
-  const updateBook = async (id, updates) => {
+  const updateBook = async (id, updates, fullOwner) => {
     console.log('here', id, updates);
     let newBook = null;
     try {
@@ -103,9 +107,9 @@ export const BooksProvider = (props) => {
       };
 
       // this is a bit sketchy, but shouldn't go out of line
-      // if (typeof newBook.owner === 'string') {
-      //   newBook.owner = fullOwner;
-      // }
+      if (typeof newBook.owner === 'string') {
+        newBook.owner = fullOwner;
+      }
 
       console.log('here', newBook);
       // recreate the books array
