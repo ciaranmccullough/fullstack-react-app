@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-  alignRight: {
-    textAlign: 'right',
-  },
 }));
 
 const BookListItem = () => {
@@ -71,14 +68,13 @@ const BookListItem = () => {
                 align='right'
                 onClick={() => updateHandler(book._id)}
                 aria-label='update book'
-                className={classes.alignRight}
               >
                 <EditOutlinedIcon />
               </TableCell>
               <TableCell
+                align='right'
                 onClick={() => deleteBook(book._id)}
                 aria-label='delete book'
-                className={classes.alignRight}
               >
                 <DeleteOutlineIcon />
               </TableCell>
