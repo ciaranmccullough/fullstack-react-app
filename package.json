@@ -4,10 +4,6 @@
   "main": "index.js",
   "author": "Ciaran McCullough <ciaran.mccullough89@gmail.com>",
   "license": "MIT",
-  "engines": {
-    "node": "12.18.0",
-    "npm": "6.14.4"
-  },
   "scripts": {
     "setup": "concurrently --kill-others-on-fail  \"cd server && yarn\" \"cd client && yarn\"",
     "client:build": "cd client && yarn build",
@@ -22,7 +18,7 @@
     "test:e2e:prod": "concurrently --kill-others-on-fail \"yarn start\" \"npx cypress open --config-file cypress.prod.json \"",
     "client": "cd client && yarn build",
     "server": "cd server && yarn start",
-    "start": "yarn server"
+    "start": "yarn client:build && yarn server"
   },
   "dependencies": {
     "concurrently": "^5.2.0"
