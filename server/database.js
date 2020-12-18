@@ -9,7 +9,7 @@ const promise = mongoose
     useCreateIndex: true, // Googled
   })
   .then(function (db) {
-    console.log('DATABASE CONNECTED!!', MONGODB_URI);
+    console.log('DATABASE CONNECTED!!');
   })
   .catch(function (err) {
     console.log('CONNECTION ERROR', err);
